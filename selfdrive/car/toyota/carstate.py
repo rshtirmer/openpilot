@@ -36,10 +36,6 @@ def get_can_parser(CP):
     ("STEER_RATE", "STEER_ANGLE_SENSOR", 0),
     ("GAS_RELEASED", "PCM_CRUISE", 0),
     ("CRUISE_ACTIVE", "PCM_CRUISE", 0),
-    ("CRUISE_STATE", "PCM_CRUISE", 0),
-    ("MAIN_ON", "PCM_CRUISE_2", 0),
-    ("SET_SPEED", "PCM_CRUISE_2", 0),
-    ("LOW_SPEED_LOCKOUT", "PCM_CRUISE_2", 0),
     ("STEER_TORQUE_DRIVER", "STEER_TORQUE_SENSOR", 0),
     ("STEER_TORQUE_EPS", "STEER_TORQUE_SENSOR", 0),
     ("TURN_SIGNALS", "STEERING_LEVERS", 3),   # 3 is no blinkers
@@ -55,7 +51,6 @@ def get_can_parser(CP):
     ("WHEEL_SPEEDS", 80),
     ("STEER_ANGLE_SENSOR", 80),
     ("PCM_CRUISE", 33),
-    ("PCM_CRUISE_2", 33),
     ("STEER_TORQUE_SENSOR", 50),
     ("EPS_STATUS", 25),
   ]
@@ -64,9 +59,22 @@ def get_can_parser(CP):
     signals += [("STATE", "AUTOPARK_STATUS", 0)]
 
   if CP.carFingerprint == CAR.LEXUS_GS300H:
-    signals += [("CRUISE_STATE", "PCM_CRUISE_3", 0)]
-    signals += [("MAIN_ON", "PCM_CRUISE_3", 0)]
-    signals += [("SET_SPEED", "PCM_CRUISE_3", 0)]
+    signals += [
+      ("CRUISE_STATE", "PCM_CRUISE_3", 0),
+      ("MAIN_ON", "PCM_CRUISE_3", 0),
+      ("SET_SPEED", "PCM_CRUISE_3", 0),
+      ("LOW_SPEED_LOCKOUT", "PCM_CRUISE_3", 0),
+    ]
+    checks += [("PCM_CRUISE_3", 1)]
+
+  else:
+    signals += [
+      ("CRUISE_STATE", "PCM_CRUISE", 0),
+      ("MAIN_ON", "PCM_CRUISE_2", 0),
+      ("SET_SPEED", "PCM_CRUISE_2", 0),
+      ("LOW_SPEED_LOCKOUT", "PCM_CRUISE_2", 0),
+    ]
+    checks += [("PCM_CRUISE_2", 33)]
 
 
   # add gas interceptor reading if we are using it

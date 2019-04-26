@@ -164,4 +164,4 @@ DBC = {
   CAR.LEXUS_GS300H: dbc_dict('lexus_is_2018_pt_generated', 'toyota_prius_2017_adas'),
 }
 
-NO_DSU_CAR = [CAR.CHR, CAR.CHRH, CAR.CAMRY, CAR.CAMRYH]
+NO_DSU_CAR = [CAR.CHR, CAR.CHRH, CAR.CAMRY, CAR.CAMRYH, CAR.LEXUS_GS300H]
