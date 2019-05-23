@@ -58,7 +58,7 @@ def get_can_parser(CP):
   if CP.carFingerprint == CAR.PRIUS:
     signals += [("STATE", "AUTOPARK_STATUS", 0)]
 
-  if CP.carFingerprint == CAR.LEXUS_GS300H:
+  if CP.carFingerprint == CAR.LEXUS_IS_2019:
     signals += [
       ("CRUISE_STATE", "PCM_CRUISE_3", 0),
       ("MAIN_ON", "PCM_CRUISE_3", 0),
@@ -174,7 +174,7 @@ class CarState(object):
     self.steer_override = abs(self.steer_torque_driver) > STEER_THRESHOLD
 
     self.user_brake = 0
-    if self.CP.carFingerprint == CAR.LEXUS_GS300H:
+    if self.CP.carFingerprint == CAR.LEXUS_IS_2019:
       self.pcm_acc_status = cp.vl["PCM_CRUISE_3"]['CRUISE_STATE']
       self.v_cruise_pcm = cp.vl["PCM_CRUISE_3"]['SET_SPEED']
       self.low_speed_lockout = 0
