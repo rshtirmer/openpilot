@@ -186,15 +186,15 @@ class CarInterface(object):
       ret.lateralTuning.pid.kf = 0.00007818594
 
     elif candidate == CAR.LEXUS_GS300H:
-      stop_and_go = True
-      ret.safetyParam = 100 # see conversion factor for STEER_TORQUE_EPS in dbc file
-      ret.wheelbase = 2.85
-      ret.steerRatio = 16.0  # 14.8 is spec end-to-end
-      tire_stiffness_factor = 0.444  # not optimized yet
-      ret.mass = 4034 * CV.LB_TO_KG + std_cargo  # mean between min and max
-      ret.lateralTuning.pid.kpV, ret.lateralTuning.pid.kiV = [[0.3], [0.1]]
-      ret.lateralTuning.pid.kf = 0.00007818594
-
+      stop_and_go = False
+      ret.safetyParam = 100
+      ret.wheelbase = 2.79908
+      ret.steerRatio = 13.3
+      tire_stiffness_factor = 0.444
+      ret.mass = 3736.8 * CV.LB_TO_KG + std_cargo  # mean between min and max
+      ret.lateralTuning.pid.kpV, ret.lateralTuning.pid.kiV = [[0.19], [0.04]]
+      ret.lateralTuning.pid.kf = 0.00006
+      
     ret.steerRateCost = 1.
     ret.centerToFront = ret.wheelbase * 0.44
 
