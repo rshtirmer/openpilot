@@ -185,15 +185,15 @@ class CarInterface(object):
       ret.lateralTuning.pid.kpV, ret.lateralTuning.pid.kiV = [[0.3], [0.05]]
       ret.lateralTuning.pid.kf = 0.00007818594
 
-    elif candidate == CAR.LEXUS_IS_2019:
+    elif candidate == CAR.LEXUS_IS:
       stop_and_go = False
       ret.safetyParam = 100
       ret.wheelbase = 2.79908
-      ret.steerRatio = 13.3 #from Q
-      tire_stiffness_factor = 0.444 #from Q
+      ret.steerRatio = 13.3
+      tire_stiffness_factor = 0.444
       ret.mass = 3737 * CV.LB_TO_KG + std_cargo  # mean between min and max
-      ret.lateralTuning.pid.kpV, ret.lateralTuning.pid.kiV = [[0.19], [0.04]] #from Q
-      ret.lateralTuning.pid.kf = 0.00006 #from Q
+      ret.lateralTuning.pid.kpV, ret.lateralTuning.pid.kiV = [[0.19], [0.04]]
+      ret.lateralTuning.pid.kf = 0.00006
       
     ret.steerRateCost = 1.
     ret.centerToFront = ret.wheelbase * 0.44
