@@ -58,7 +58,7 @@ def get_can_parser(CP):
   if CP.carFingerprint == CAR.PRIUS:
     signals += [("STATE", "AUTOPARK_STATUS", 0)]
 
-  if CP.carFingerprint == CAR.LEXUS_IS_2019:
+  if CP.carFingerprint == CAR.LEXUS_IS:
     signals += [
       ("CRUISE_STATE", "PCM_CRUISE_3", 0),
       ("MAIN_ON", "PCM_CRUISE_3", 0),
@@ -174,21 +174,19 @@ class CarState(object):
     self.steer_override = abs(self.steer_torque_driver) > STEER_THRESHOLD
 
     self.user_brake = 0
-    if self.CP.carFingerprint == CAR.LEXUS_IS_2019:
+    if self.CP.carFingerprint == CAR.LEXUS_IS:
       self.pcm_acc_status = cp.vl["PCM_CRUISE_3"]['CRUISE_STATE']
       self.v_cruise_pcm = cp.vl["PCM_CRUISE_3"]['SET_SPEED']
       self.low_speed_lockout = 0
       self.main_on = cp.vl["PCM_CRUISE_3"]['MAIN_ON']
+    elif self.CP.carFingerprint == CAR.PRIUS:
+      self.generic_toggle = cp.vl["AUTOPARK_STATUS"]['STATE'] != 0
     else:
       self.pcm_acc_status = cp.vl["PCM_CRUISE"]['CRUISE_STATE']
       self.v_cruise_pcm = cp.vl["PCM_CRUISE_2"]['SET_SPEED']
       self.low_speed_lockout = cp.vl["PCM_CRUISE_2"]['LOW_SPEED_LOCKOUT'] == 2
       self.main_on = cp.vl["PCM_CRUISE_2"]['MAIN_ON']
-
+      self.generic_toggle = bool(cp.vl["LIGHT_STALK"]['AUTO_HIGH_BEAM'])
     self.pcm_acc_active = bool(cp.vl["PCM_CRUISE"]['CRUISE_ACTIVE'])
     self.gas_pressed = not cp.vl["PCM_CRUISE"]['GAS_RELEASED']
     self.brake_lights = bool(cp.vl["ESP_CONTROL"]['BRAKE_LIGHTS_ACC'] or self.brake_pressed)
-    if self.CP.carFingerprint == CAR.PRIUS:
-      self.generic_toggle = cp.vl["AUTOPARK_STATUS"]['STATE'] != 0
-    else:
-      self.generic_toggle = bool(cp.vl["LIGHT_STALK"]['AUTO_HIGH_BEAM'])
