@@ -35,10 +35,6 @@ def get_can_parser(CP):
     ("STEER_FRACTION", "STEER_ANGLE_SENSOR", 0),
     ("STEER_RATE", "STEER_ANGLE_SENSOR", 0),
     ("CRUISE_ACTIVE", "PCM_CRUISE", 0),
-    ("CRUISE_STATE", "PCM_CRUISE", 0),
-    ("MAIN_ON", "PCM_CRUISE_2", 0),
-    ("SET_SPEED", "PCM_CRUISE_2", 0),
-    ("LOW_SPEED_LOCKOUT", "PCM_CRUISE_2", 0),
     ("STEER_TORQUE_DRIVER", "STEER_TORQUE_SENSOR", 0),
     ("STEER_TORQUE_EPS", "STEER_TORQUE_SENSOR", 0),
     ("TURN_SIGNALS", "STEERING_LEVERS", 3),   # 3 is no blinkers
@@ -66,6 +62,15 @@ def get_can_parser(CP):
 
   if CP.carFingerprint == CAR.PRIUS:
     signals += [("STATE", "AUTOPARK_STATUS", 0)]
+  
+  if CP.carFingerprint == CAR.LEXUS_IS:
+    signals += [
+      ("CRUISE_STATE", "PCM_CRUISE_3", 0),
+      ("MAIN_ON", "PCM_CRUISE_3", 0),
+      ("SET_SPEED", "PCM_CRUISE_3", 0),
+      ("LOW_SPEED_LOCKOUT", "PCM_CRUISE_3", 0),
+    ]
+    checks += [("PCM_CRUISE_3", 1)]
 
   # add gas interceptor reading if we are using it
   if CP.enableGasInterceptor:
@@ -164,7 +169,8 @@ class CarState(object):
 
     self.user_brake = 0
     self.v_cruise_pcm = cp.vl["PCM_CRUISE_2"]['SET_SPEED']
-    self.pcm_acc_status = cp.vl["PCM_CRUISE"]['CRUISE_STATE']
+    self.pcm_acc_status = cp.vl["PCM_CRUISE"]['
+                                              ']
     self.pcm_acc_active = bool(cp.vl["PCM_CRUISE"]['CRUISE_ACTIVE'])
     self.low_speed_lockout = cp.vl["PCM_CRUISE_2"]['LOW_SPEED_LOCKOUT'] == 2
     self.brake_lights = bool(cp.vl["ESP_CONTROL"]['BRAKE_LIGHTS_ACC'] or self.brake_pressed)
